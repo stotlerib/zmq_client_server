@@ -1,5 +1,4 @@
 SOCKET_PATH ?= /tmp/zmq_client_server_0
-PORT        ?= 5555
 
 CC          = gcc
 CFLAGS      = -Wall -Wextra -O2
@@ -37,7 +36,7 @@ build_client:
 
 .PHONY: run_client
 run_client: build_client
-	@cd $(ERL_DIR) && ERL_FLAGS="-client_app port $(PORT)" rebar3 shell
+	@cd $(ERL_DIR) && SOCKET_PATH="$(SOCKET_PATH)" rebar3 shell
 
 .PHONY: clean_client
 clean_client:
@@ -46,7 +45,3 @@ clean_client:
 	rm -rf $(ERL_DIR)/.rebar3
 	rm -f $(ERL_DIR)/rebar.lock
 	rm -f $(ERL_DIR)/erl_crash.dump ./erl_crash.dump
-
-.PHONY: run_socat
-run_socat:
-	socat TCP-LISTEN:$(PORT),reuseaddr,fork UNIX-CONNECT:$(SOCKET_PATH)
