@@ -78,7 +78,7 @@ int main(int argument_count, char **arguments)
             }
             else
             {
-                printf("Message sent\n");
+                printf("[Message sent] %s\n", message);
             }
         }
     }
